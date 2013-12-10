@@ -1,4 +1,4 @@
-organization  := "com.example"
+organization  := "com.hoppyfrog"
 
 version       := "0.1"
 
@@ -24,3 +24,7 @@ libraryDependencies ++= {
 }
 
 seq(Revolver.settings: _*)
+
+ideaExcludeFolders += ".idea"
+
+ideaExcludeFolders += ".idea_modules"

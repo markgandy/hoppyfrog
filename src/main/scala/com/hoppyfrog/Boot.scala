@@ -1,4 +1,4 @@
-package com.example
+package com.hoppyfrog
 
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
