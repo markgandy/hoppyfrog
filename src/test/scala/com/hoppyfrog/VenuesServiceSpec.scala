@@ -8,11 +8,11 @@ import StatusCodes._
 class VenuesServiceSpec extends Specification with Specs2RouteTest with VenuesService {
   def actorRefFactory = system
   
-  "MyService" should {
+  "VenuesService" should {
 
-    "return a greeting for GET requests to the root path" in {
-      Get() ~> myRoute ~> check {
-        responseAs[String] must contain("Say hello")
+    "return a venue for GET requests to /venue/1" in {
+      Get("/venues/1") ~> myRoute ~> check {
+        responseAs[String] must contain("venue")
       }
     }
 
