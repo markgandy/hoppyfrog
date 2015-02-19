@@ -7,7 +7,7 @@ import MediaTypes._
 
 // we don't implement our route structure directly in the service actor because
 // we want to be able to test it independently, without having to spin up an actor
-class VenuesServiceActor extends Actor with VenuesService {
+class VenueServiceActor extends Actor with VenueService {
 
   // the HttpService trait defines only one abstract member, which
   // connects the services environment to the enclosing actor or test
@@ -21,7 +21,7 @@ class VenuesServiceActor extends Actor with VenuesService {
 
 
 // this trait defines our service behavior independently from the service actor
-trait VenuesService extends HttpService {
+trait VenueService extends HttpService {
 
   val myRoute =
     path("venues" / IntNumber) { venueId =>

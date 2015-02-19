@@ -2,29 +2,22 @@ organization  := "com.hoppyfrog"
 
 version       := "0.1"
 
-scalaVersion  := "2.10.3"
+scalaVersion  := "2.11.2"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
-resolvers ++= Seq(
-  "spray repo" at "http://repo.spray.io/"
-)
-
 libraryDependencies ++= {
-  val akkaV = "2.1.4"
-  val sprayV = "1.1.0"
+  val akkaV = "2.3.6"
+  val sprayV = "1.3.2"
   Seq(
-    "io.spray"            %   "spray-can"     % sprayV,
-    "io.spray"            %   "spray-routing" % sprayV,
-    "io.spray"            %   "spray-testkit" % sprayV,
+    "io.spray"            %%  "spray-can"     % sprayV,
+    "io.spray"            %%  "spray-routing" % sprayV,
+    "io.spray"            %%  "spray-testkit" % sprayV  % "test",
     "com.typesafe.akka"   %%  "akka-actor"    % akkaV,
-    "com.typesafe.akka"   %%  "akka-testkit"  % akkaV,
-    "org.specs2"          %%  "specs2"        % "2.2.3" % "test"
+    "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
+    "org.specs2"          %%  "specs2-core"   % "2.3.11" % "test"
   )
 }
 
-seq(Revolver.settings: _*)
+Revolver.settings
 
-ideaExcludeFolders += ".idea"
-
-ideaExcludeFolders += ".idea_modules"

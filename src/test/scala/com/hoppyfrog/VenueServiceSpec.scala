@@ -5,7 +5,7 @@ import spray.testkit.Specs2RouteTest
 import spray.http._
 import StatusCodes._
 
-class VenuesServiceSpec extends Specification with Specs2RouteTest with VenuesService {
+class VenueServiceSpec extends Specification with Specs2RouteTest with VenueService {
   def actorRefFactory = system
   
   "VenuesService" should {
