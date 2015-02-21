@@ -1,32 +1,41 @@
 package com.hoppyfrog
 
+import com.mongodb.casbah.MongoClient
+import com.novus.salat._
+import com.novus.salat.global._
 import org.specs2.mutable.Specification
+import org.specs2.specification.BeforeExample
+import spray.http.StatusCodes._
+import spray.routing.HttpService
 import spray.testkit.Specs2RouteTest
-import spray.http._
-import StatusCodes._
 
-class VenueServiceSpec extends Specification with Specs2RouteTest with VenueService {
+class VenueServiceSpec extends Specification with Specs2RouteTest with HttpService with VenueService with BeforeExample {
+
+  val client = MongoClient("localhost", 27017)
+  val db = client("admin")
+  val collection = db("venues")
+  val uri = "/venues"
+  val venueId = 1
+
   def actorRefFactory = system
-  
-  "VenuesService" should {
+  def before = db.dropDatabase()
 
-    "return a venue for GET requests to /venue/1" in {
-      Get("/venues/1") ~> myRoute ~> check {
-        responseAs[String] must contain("venue")
+  sequential
+
+  s"GET $uri/$venueId" should {
+
+    val expected = Venue(venueId, "The Cornish Arms")
+
+    "return OK" in {
+      insertVenue(expected)
+      Get(s"$uri/$venueId") ~> myRoute ~> check {
+        response.status must equalTo(OK)
       }
     }
 
-    "leave GET requests to other paths unhandled" in {
-      Get("/kermit") ~> myRoute ~> check {
-        handled must beFalse
-      }
-    }
-
-    "return a MethodNotAllowed error for PUT requests to the root path" in {
-      Put("/venues/1") ~> sealRoute(myRoute) ~> check {
-        status === MethodNotAllowed
-        responseAs[String] === "HTTP method not allowed, supported methods: GET"
-      }
+    def insertVenue(venue: Venue) {
+      collection.insert(grater[Venue].asDBObject(venue))
     }
   }
+
 }
